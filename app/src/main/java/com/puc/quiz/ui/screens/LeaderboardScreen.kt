@@ -1,4 +1,4 @@
-package com.puc.quiz.ui.screens.leaderboard
+package com.puc.quiz.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.puc.quiz.data.leaderboard.LeaderboardPlayer
 
 @Composable
-fun LeaderboardScreen(leaderboard: List<LeaderboardPlayer>) {
+fun LeaderboardScreen(leaderboard: List<LeaderboardPlayer>, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,6 +41,9 @@ fun LeaderboardScreen(leaderboard: List<LeaderboardPlayer>) {
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(leaderboard) { LeaderboardItem(it) }
+        }
+        Button(onClick = onClick) {
+            Text(text = "Voltar")
         }
     }
 }

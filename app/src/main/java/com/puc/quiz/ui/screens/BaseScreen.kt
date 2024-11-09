@@ -5,10 +5,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.puc.quiz.data.leaderboard.LeaderboardPlayer
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.puc.quiz.data.viewModel.AppViewModel
 import com.puc.quiz.data.viewModel.AppViewModelFactory
-import com.puc.quiz.ui.screens.leaderboard.LeaderboardScreen
 
 @Composable
 fun BaseScreen(
@@ -16,6 +17,37 @@ fun BaseScreen(
     modifier: Modifier = Modifier,
     appViewModel: AppViewModel = viewModel(factory = factory)
 ) {
-    val leaderboardData by appViewModel.resultList.collectAsState(initial = emptyList())
-    LeaderboardScreen(leaderboardData)
+    val navController = rememberNavController()
+    val questions = appViewModel.getQuestions()
+    val leaderboardData by appViewModel.leaderboardList.collectAsState(initial = emptyList())
+
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen(onStartQuiz = {navController.navigate("quiz")})
+        }
+
+        composable("quiz") {
+            QuizWelcomeScreen(
+                onQuestionClick = {navController.navigate("question/0")}
+            )
+        }
+
+        composable("leaderboard") {
+            LeaderboardScreen(leaderboard = leaderboardData, onClick = {navController.navigate("home")})
+        }
+
+        questions.forEachIndexed { index, _ ->
+            composable("question/$index") {
+                QuestionScreen(question = questions[index],
+                    onNext = {
+                        if (index < questions.size - 1)
+                            navController.navigate("question/${index + 1}")
+                        else
+                            navController.navigate("leaderboard")
+                    }
+                )
+            }
+        }
+    }
+
 }
