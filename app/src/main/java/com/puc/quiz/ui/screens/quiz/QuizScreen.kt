@@ -1,4 +1,4 @@
-package com.puc.quiz.ui.screens.quiz
+ package com.puc.quiz.ui.screens.quiz
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
