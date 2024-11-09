@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [LeaderboardPlayer::class], version = 1, exportSchema = false)
+@Database(entities = [LeaderboardPlayer::class], version = 2, exportSchema = false)
 abstract class LeaderboardDatabase : RoomDatabase() {
-    abstract fun leaderboardDao(): LeaderboardDAO
+    abstract val leaderboardDao: LeaderboardDAO
 
     companion object {
         @Volatile

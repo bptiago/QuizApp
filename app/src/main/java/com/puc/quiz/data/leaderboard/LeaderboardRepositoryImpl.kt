@@ -6,4 +6,6 @@ class LeaderboardRepositoryImpl(
     private val dao: LeaderboardDAO
 ) : LeaderboardRepository {
     override fun list(): Flow<List<LeaderboardPlayer>> = dao.list()
+    override suspend fun insertLeaderboardEntry(leaderboardPlayer: LeaderboardPlayer) =
+        dao.insertLeaderboardEntry(leaderboardPlayer)
 }

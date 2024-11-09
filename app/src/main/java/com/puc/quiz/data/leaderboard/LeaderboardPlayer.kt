@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "leaderboard")
 data class LeaderboardPlayer (
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int?,
     @ColumnInfo(index = true)
     val name: String,
-    val score: Double
+    val score: Int
 )

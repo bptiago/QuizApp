@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LeaderboardRepository {
     fun list(): Flow<List<LeaderboardPlayer>>
+    suspend fun insertLeaderboardEntry(leaderboardPlayer: LeaderboardPlayer)
 }

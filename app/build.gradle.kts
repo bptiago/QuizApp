@@ -72,4 +72,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.androidx.room.ktx)
+
+    // Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
 }
