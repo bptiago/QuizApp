@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.puc.quiz.data.quiz.Question
 
 @Composable
-fun QuestionScreen(question: Question, onNext: () -> Unit) {
+fun QuestionScreen(question: Question, onNext: (Boolean) -> Unit) {
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
 
@@ -50,20 +50,16 @@ fun QuestionScreen(question: Question, onNext: () -> Unit) {
                 .selectable(
                     selected = (option == selectedOption),
                     onClick = {
-                        // TODO: Lógica para verificar se a resposta é correta. Se certo, adicionar pontos ao score do usuário
                         onOptionSelected(option)
-                        onNext()
+                        val bool = option.equals(question.answer, true)
+                        onNext(bool)
                     }
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
                     selected = (option == selectedOption),
-                    onClick = {
-                        // TODO: Lógica para verificar se a resposta é correta. Se certo, adicionar pontos ao score do usuário
-                        onOptionSelected(option)
-                        onNext()
-                    }
+                    onClick = {}
                 )
                 Text(text = option, color = MaterialTheme.colorScheme.secondary)
             }

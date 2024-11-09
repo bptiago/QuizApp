@@ -15,15 +15,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.puc.quiz.data.leaderboard.LeaderboardPlayer
 
 @Composable
-fun LeaderboardScreen(leaderboard: List<LeaderboardPlayer>, onClick: () -> Unit) {
+fun LeaderboardScreen(
+    leaderboard: List<LeaderboardPlayer>,
+    onSaveScore: (LeaderboardPlayer) -> Unit,
+    score: Int)
+{
+    var playerName by remember { mutableStateOf("") }
+    var warnText by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,15 +49,34 @@ fun LeaderboardScreen(leaderboard: List<LeaderboardPlayer>, onClick: () -> Unit)
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        Text(
+            text = warnText,
+            style = MaterialTheme.typography.bodySmall,
+            color = Color.Red
+        )
+
+        TextField(value = playerName, onValueChange = {playerName = it})
+
+        Button(onClick = {
+            if (playerName.isEmpty()) {
+                warnText = "Inserir um nome válido!"
+            }
+            else {
+                warnText = ""
+                val player = LeaderboardPlayer(null, playerName, score)
+                onSaveScore(player)
+            }
+        }) {
+            Text(text = "Salvar")
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(leaderboard) { LeaderboardItem(it) }
         }
-        Button(onClick = onClick) {
-            Text(text = "Voltar")
-        }
+
     }
 }
 
