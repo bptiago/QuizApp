@@ -37,7 +37,8 @@ fun BaseScreen(
 
         composable("quiz") {
             QuizWelcomeScreen(
-                onQuestionClick = {navController.navigate("question/0")}
+                onQuestionClick = {navController.navigate("question/0")},
+                onBack = {navController.navigate("home")}
             )
         }
 
@@ -66,5 +67,4 @@ fun BaseScreen(
             }
         }
     }
-
 }

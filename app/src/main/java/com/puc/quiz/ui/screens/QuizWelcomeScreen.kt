@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.puc.quiz.R
 
  @Composable
- fun QuizWelcomeScreen(onQuestionClick: () -> Unit) {
+ fun QuizWelcomeScreen(onQuestionClick: () -> Unit, onBack: () -> Unit) {
      Column(
          modifier = Modifier
              .fillMaxSize()
@@ -59,6 +60,12 @@ import com.puc.quiz.R
 
          Button(onClick = onQuestionClick) {
              Text("Começar")
+         }
+
+         Spacer(modifier = Modifier.size(10.dp))
+
+         OutlinedButton(onClick = onBack) {
+             Text(text = "Voltar")
          }
      }
  }
