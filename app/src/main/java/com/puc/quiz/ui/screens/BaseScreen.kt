@@ -28,7 +28,11 @@ fun BaseScreen(
 
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            HomeScreen(onStartQuiz = {navController.navigate("quiz")})
+            score = 0
+            HomeScreen(
+                onStartQuiz = {navController.navigate("quiz")},
+                onSeeLeaderboard = {navController.navigate("leaderboard")}
+            )
         }
 
         composable("quiz") {
