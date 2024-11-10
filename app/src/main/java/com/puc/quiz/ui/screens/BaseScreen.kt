@@ -45,9 +45,8 @@ fun BaseScreen(
         composable("leaderboard") {
             LeaderboardScreen(
                 leaderboard = leaderboardData,
-                onSaveScore = { player ->
-                    appViewModel.insertLeaderBoardEntry(player)
-                    navController.navigate("home") },
+                onSaveScore = { player -> appViewModel.insertLeaderBoardEntry(player) },
+                onBack = {navController.navigate("home")},
                 score = score
             )
         }
