@@ -20,8 +20,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.puc.quiz.data.quiz.Question
+
 
 @Composable
 fun QuestionScreen(question: Question, onNext: (Boolean) -> Unit) {
@@ -35,6 +40,16 @@ fun QuestionScreen(question: Question, onNext: (Boolean) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(question.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier)
+
         Text("Qual país é esse?", style = MaterialTheme.typography.titleSmall)
 
         Spacer(Modifier.height(16.dp))

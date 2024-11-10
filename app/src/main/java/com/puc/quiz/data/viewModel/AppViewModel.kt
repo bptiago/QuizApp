@@ -10,18 +10,19 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(private val repository: LeaderboardRepository, private val context: Context): ViewModel() {
     val leaderboardList = repository.list()
+    private val size = "w580"
 
     private val questions = listOf(
-        Question(imageUrl = "", answer = "França", options = listOf("Croácia", "Suécia", "Noruega", "França")),
-        Question(imageUrl = "", answer = "Brasil", options = listOf("Finlândia", "Dinamarca", "Grécia", "Brasil")),
-        Question(imageUrl = "", answer = "Alemanha", options = listOf("Egito", "África do Sul", "Portugal", "Alemanha")),
-        Question(imageUrl = "", answer = "Japão", options = listOf("Turquia", "Índia", "China", "Japão")),
-        Question(imageUrl = "", answer = "Itália", options = listOf("Rússia", "Coreia do Sul", "Nova Zelândia", "Itália")),
-        Question(imageUrl = "", answer = "Canadá", options = listOf("Filipinas", "Indonésia", "Tailândia", "Canadá")),
-        Question(imageUrl = "", answer = "Austrália", options = listOf("Malásia", "Vietnã", "Suíça", "Austrália")),
-        Question(imageUrl = "", answer = "México", options = listOf("Áustria", "Irlanda", "Escócia", "México")),
-        Question(imageUrl = "", answer = "Argentina", options = listOf("Peru", "Colômbia", "Chile", "Argentina")),
-        Question(imageUrl = "", answer = "Espanha", options = listOf("Uruguai", "Venezuela", "Nigéria", "Espanha"))
+        Question(imageUrl = "https://flagcdn.com/$size/fr.png", answer = "França", options = listOf("Croácia", "Suécia", "Noruega", "França")),
+        Question(imageUrl = "https://flagcdn.com/$size/br.png", answer = "Brasil", options = listOf("Finlândia", "Dinamarca", "Grécia", "Brasil")),
+        Question(imageUrl = "https://flagcdn.com/$size/de.png", answer = "Alemanha", options = listOf("Egito", "África do Sul", "Portugal", "Alemanha")),
+        Question(imageUrl = "https://flagcdn.com/$size/jp.png", answer = "Japão", options = listOf("Turquia", "Índia", "China", "Japão")),
+        Question(imageUrl = "https://flagcdn.com/$size/it.png", answer = "Itália", options = listOf("Rússia", "Coreia do Sul", "Nova Zelândia", "Itália")),
+        Question(imageUrl = "https://flagcdn.com/$size/ca.png", answer = "Canadá", options = listOf("Filipinas", "Indonésia", "Tailândia", "Canadá")),
+        Question(imageUrl = "https://flagcdn.com/$size/au.png", answer = "Austrália", options = listOf("Malásia", "Vietnã", "Suíça", "Austrália")),
+        Question(imageUrl = "https://flagcdn.com/$size/mx.png", answer = "México", options = listOf("Áustria", "Irlanda", "Escócia", "México")),
+        Question(imageUrl = "https://flagcdn.com/$size/ar.png", answer = "Argentina", options = listOf("Peru", "Colômbia", "Chile", "Argentina")),
+        Question(imageUrl = "https://flagcdn.com/$size/es.png", answer = "Espanha", options = listOf("Uruguai", "Venezuela", "Nigéria", "Espanha"))
     )
 
     fun getQuestions(): List<Question> {
