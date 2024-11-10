@@ -46,90 +46,80 @@ fun QuestionScreen(question: Question, onNext: (Boolean) -> Unit) {
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
     val clickedStates = remember { mutableStateMapOf<String, Boolean>() }
-    var isVisible by remember { mutableStateOf(true) }
-
     val coroutineScope = rememberCoroutineScope()
 
-    AnimatedVisibility(
-        visible = isVisible,
-        exit = slideOutHorizontally(
-            targetOffsetX = {fullWidth -> -fullWidth },
-            animationSpec = tween(durationMillis = 1000)
-        ) + fadeOut(animationSpec = tween(durationMillis = 1500))
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
 
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(question.imageUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-            )
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(question.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+        )
 
-            Text(
-                "Qual país é esse?",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 10.dp)
-            )
+        Text(
+            "Qual país é esse?",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(vertical = 10.dp)
+        )
 
-            question.options.forEachIndexed { _, option ->
-                val isClicked = clickedStates[option] ?: false
+        question.options.forEachIndexed { _, option ->
+            val isClicked = clickedStates[option] ?: false
 
-                Row(Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
-                    .border(
-                        border = BorderStroke(
-                            1.dp,
-                            when {
-                                !isClicked -> MaterialTheme.colorScheme.secondary
-                                option.equals(question.answer, ignoreCase = true) -> Green40
-                                else -> Red40
-                            }
-                        ),
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .selectable(
-                        selected = (option == selectedOption),
-                        onClick = {
-                            onOptionSelected(option)
-                            clickedStates[option] = true // Atualizar estado da Row individual
-
-                            val bool = option.equals(question.answer, true)
-                            // Chamar onNext após 1 segundo de clique
-                            coroutineScope.launch {
-                                delay(500)
-                                isVisible = false
-                                onNext(bool)
-                            }
-                        }
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = (option == selectedOption),
-                        onClick = {}
-                    )
-                    Text(
-                        text = option,
-                        color = when {
+            Row(Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp, vertical = 10.dp)
+                .border(
+                    border = BorderStroke(
+                        1.dp,
+                        when {
                             !isClicked -> MaterialTheme.colorScheme.secondary
                             option.equals(question.answer, ignoreCase = true) -> Green40
                             else -> Red40
                         }
-                    )
-                }
+                    ),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .selectable(
+                    selected = (option == selectedOption),
+                    onClick = {
+                        onOptionSelected(option)
+                        clickedStates[option] = true // Atualizar estado da Row individual
+
+                        val bool = option.equals(question.answer, true)
+                        // Chamar onNext após 1 segundo de clique
+                        coroutineScope.launch {
+                            delay(500)
+                            onNext(bool)
+                        }
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = (option == selectedOption),
+                    onClick = {}
+                )
+                Text(
+                    text = option,
+                    color = when {
+                        !isClicked -> MaterialTheme.colorScheme.secondary
+                        option.equals(question.answer, ignoreCase = true) -> Green40
+                        else -> Red40
+                    }
+                )
             }
         }
     }
-
 }
+
